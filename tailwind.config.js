@@ -4,6 +4,10 @@ module.exports = {
     "./src/**/*.{js,jsx,ts,tsx}",
   ],
   theme: {
+    fontFamily: {
+      charm: ["Charm", "cursive"],
+      itim: ["Itim", "cursive"]
+    },
     extend: {},
   },
   plugins: [],
