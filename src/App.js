@@ -1,10 +1,16 @@
 // resource
 // https://youtu.be/lLWfZL-Y8lM
 
+import Header from "./components/Header";
+import TodoContainer from "./features/TodoContainer";
+
 function App() {
   return (
     <div className="App max-w-5xl mx-auto font-itim">
-      <h1 className="text-3xl font-bold p-3 bg-purple-400">ทูดูลิสต์</h1>
+      <Header />
+      <div className="mx-auto w-3/5 border mt-3 rounded">
+        <TodoContainer />
+      </div>
             
     </div>
   );
