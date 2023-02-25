@@ -1,6 +1,6 @@
 
 import React, { useEffect, useState } from 'react'
-import {getTodo, addTodo, updateTodo, deleteTodo} from '../api/todoApi'
+import {getTodo, addTodo} from '../api/todoApi'
 // import {useQuery, useMutation, useQueryClient} from 'react-query'
 import TodoForm from './TodoForm'
 import TodoList from './TodoList'
@@ -14,10 +14,18 @@ export default function TodoContainer() {
       setAllTodo(data)
     })
   }, [haveEdit])
+
+  const hdlAdd = (title) => {
+    if (title.trim()==='')
+      return
+    let newTodo = { title, completed : false, userId: 1}
+    addTodo(newTodo)
+    setHaveEdit(prv => !prv)
+  }
   
   return (
     <>
-      <TodoForm />
+      <TodoForm hdlAdd={hdlAdd} />
       <TodoList allTodo={allTodo} setHaveEdit={setHaveEdit}/>
     </>
   )

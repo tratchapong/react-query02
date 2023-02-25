@@ -5,7 +5,7 @@ const todoApi = axios.create({
 })
 
 export const getTodo = async () => {
-    const res = await todoApi.get('/todo')
+    const res = await todoApi.get('/todo?_sort=id&_order=desc')
     return res.data
 }
 
