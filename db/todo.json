@@ -1201,10 +1201,16 @@
       "id": 201
     },
     {
-      "title": "This is a new Todo02",
+      "title": "Todo 02",
       "completed": false,
       "userId": 1,
       "id": 202
+    },
+    {
+      "title": "Todo 03",
+      "completed": true,
+      "userId": 1,
+      "id": 203
     }
   ]
 }

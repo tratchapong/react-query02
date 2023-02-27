@@ -5,13 +5,15 @@ import {getTodo, addTodo} from '../api/todoApi'
 import TodoForm from './TodoForm'
 import TodoList from './TodoList'
 
-export default function TodoContainer() {
+export default function TodoContainer(props) {
+  const {setTotal} = props
   const [allTodo, setAllTodo] = useState([])
   const [haveEdit, setHaveEdit] = useState(false)
   useEffect(() => {
     getTodo().then(data => {
       console.log(data)
       setAllTodo(data)
+      setTotal(data.length)
     })
   }, [haveEdit])
 

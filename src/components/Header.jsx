@@ -1,10 +1,11 @@
 import React from 'react'
 
-export default function Header() {
+export default function Header(props) {
+  const {total} = props
   return (
     <div className="navbar bg-base-100">
   <div className="flex-1">
-    <p className="btn btn-ghost normal-case text-xl text-left">ทูดูลิสต์</p>
+    <p className="btn btn-ghost normal-case text-xl text-left">ทูดูลิสต์ : {total}</p>
   </div>
   <div className="flex-none">
     <ul className="menu menu-horizontal px-1">
