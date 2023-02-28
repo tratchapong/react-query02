@@ -1,7 +1,8 @@
 import React from 'react'
+import { useTodo } from '../contexts/todoContext'
 
 export default function Header(props) {
-  const {total} = props
+  const {total} = useTodo()
   return (
     <div className="navbar bg-base-100">
   <div className="flex-1">

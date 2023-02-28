@@ -1,14 +1,17 @@
 import React, { useState } from "react";
+import { useTodo } from "../contexts/todoContext";
 
 export default function TodoForm(props) {
-  const {hdlAdd} = props
-  const [title, setTitle] = useState('')
+  const { hdlAdd } = useTodo();
+  const [title, setTitle] = useState("");
 
   const hdlSubmit = () => {
-    hdlAdd(title)
-    setTitle('')
-  }
-   return (
+    if (title.trim()) {
+      hdlAdd(title);
+    }
+    setTitle("");
+  };
+  return (
     <div className="flex">
       <div className="form-control grow ">
         <div className="input-group">
@@ -17,7 +20,7 @@ export default function TodoForm(props) {
             placeholder="Add new…"
             className="input input-bordered grow"
             value={title}
-            onChange={e=>setTitle(e.target.value)}
+            onChange={(e) => setTitle(e.target.value)}
           />
           <button className="btn btn-square bg-slate-500" onClick={hdlSubmit}>
             <svg

@@ -1,23 +1,24 @@
 import React, { useState } from "react";
-import { updateTodo, deleteTodo } from "../api/todoApi";
+import { useTodo } from "../contexts/todoContext";
 
 export default function TodoItem(props) {
-  const { todo, setHaveEdit } = props;
+  const { todo } = props;
+  const {hdlUpdate, hdlDelete } = useTodo()
   const [completed, setCompleted] = useState(todo.completed);
   const [title, setTitle] = useState(todo.title);
   const [editMode, setEditMode] = useState(false);
 
   const hdlEditOk = () => {
-    const newTodo = { ...todo, title, completed };
-    updateTodo(newTodo);
     setEditMode(false);
-    setHaveEdit((prv) => !prv);
+    if((title.trim() === todo.title && completed === todo.completed) || title.trim ==='')
+      return
+    const newTodo = { ...todo, title, completed };
+    hdlUpdate(newTodo);
   };
 
-  const hdlDelete = () => {
+  const hdlDeleteClick = () => {
     if (window.confirm('This item will be Deleted ?')){
-      deleteTodo(todo);
-      setHaveEdit((prv) => !prv);
+      hdlDelete(todo);
     }
   };
   return (
@@ -52,7 +53,7 @@ export default function TodoItem(props) {
           </span>
         )}
 
-        <span className="bg-pink-600 btn" onClick={hdlDelete}>
+        <span className="bg-pink-600 btn" onClick={hdlDeleteClick}>
           Delete
         </span>
       </label>
