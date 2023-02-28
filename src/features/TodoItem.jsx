@@ -22,10 +22,12 @@ export default function TodoItem(props) {
   });
 
   const hdlOKClick = () => {
-    let okToUpdate = false
+    let okToUpdate = false;
     setEditMode(false);
-    okToUpdate = (title.trim() !== "" && title.trim() !== todo.title.trim()) || completed !== todo.completed
-    if(okToUpdate)
+    okToUpdate =
+      (title.trim() !== "" && title.trim() !== todo.title.trim()) ||
+      completed !== todo.completed;
+    if (okToUpdate)
       updateTodoMutation.mutate({
         ...todo,
         title,
@@ -41,20 +43,13 @@ export default function TodoItem(props) {
 
   return (
     <div className="form-control grow">
-      {editMode && (
-        <input
-          type="checkbox"
-          checked={completed}
-          className="checkbox checkbox-primary"
-          onChange={() => setCompleted(!completed)}
-        />
-      )}
+
       <label className="input-group">
         <input
           type="text"
           placeholder="Todo-item"
           className={`input input-bordered grow ${
-            todo.completed ? "bg-lime-200" : ""
+            completed ? "bg-lime-200" : ""
           }`}
           readOnly={!editMode}
           value={title}
@@ -65,9 +60,17 @@ export default function TodoItem(props) {
             Edit
           </span>
         ) : (
-          <span className="bg-violet-600 btn" onClick={hdlOKClick}>
-            Ok
-          </span>
+          <>
+            <input
+              type="checkbox"
+              checked={completed}
+              className="checkbox checkbox-primary self-center mx-1 rounded"
+              onChange={() => setCompleted(!completed)}
+            />
+            <span className="bg-violet-600 btn" onClick={hdlOKClick}>
+              Ok
+            </span>
+          </>
         )}
 
         <span className="bg-pink-600 btn" onClick={hdlDeleteClick}>
