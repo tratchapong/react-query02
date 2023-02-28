@@ -1,6 +1,26 @@
-import React from "react";
+import React, {useState} from "react";
+import {useMutation, useQueryClient} from 'react-query'
+import { addTodo,} from '../api/todoApi'
 
 export default function TodoForm() {
+  const queryClient = useQueryClient()
+  const [title, setTitle] = useState('')
+  
+  const addTodoMutation = useMutation(addTodo, {
+    onSuccess: () => {
+      queryClient.invalidateQueries('todos')
+    }
+  })
+
+  const hdlAddClick = ()=> {
+    let newTitle = title.trim()
+    if(newTitle !== '') 
+      addTodoMutation.mutate({
+        title : newTitle, completed : false, userId: 1
+      })
+    setTitle('')
+  } 
+  
   return (
     <div className="flex">
       <div className="form-control grow ">
@@ -9,8 +29,13 @@ export default function TodoForm() {
             type="text"
             placeholder="Add new…"
             className="input input-bordered grow"
+            value={title}
+            onChange={(e)=>setTitle(e.target.value)}
           />
-          <button className="btn btn-square bg-slate-500">
+          <button 
+            className="btn btn-square bg-slate-500"
+            onClick={hdlAddClick}
+          >
             <svg
               viewBox="0 0 24 24"
               fill="none"

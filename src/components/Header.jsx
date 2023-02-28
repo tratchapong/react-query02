@@ -1,10 +1,19 @@
 import React from 'react'
+import { useQuery } from 'react-query'
+import { getTodo } from '../api/todoApi'
+
 
 export default function Header() {
+
+  const { 
+    data : todos 
+  } = useQuery('todos', getTodo)
+
+
   return (
     <div className="navbar bg-base-100">
   <div className="flex-1">
-    <p className="btn btn-ghost normal-case text-xl text-left">ทูดูลิสต์</p>
+    <p className="btn btn-ghost normal-case text-xl text-left">ทูดูลิสต์ : {todos && todos.length}</p>
   </div>
   <div className="flex-none">
     <ul className="menu menu-horizontal px-1">

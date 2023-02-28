@@ -1,22 +1,78 @@
-import React,{useState} from "react";
+import React, { useState } from "react";
+import { useMutation, useQueryClient } from "react-query";
+import { updateTodo, deleteTodo } from "../api/todoApi";
 
+export default function TodoItem(props) {
+  const { todo } = props;
+  const queryClient = useQueryClient();
+  const [editMode, setEditMode] = useState(false);
+  const [title, setTitle] = useState(todo.title);
+  const [completed, setCompleted] = useState(todo.completed);
 
-export default function TodoItem() {
-  const [editMode, setEditMode] = useState(false)
+  const updateTodoMutation = useMutation(updateTodo, {
+    onSuccess: () => {
+      queryClient.invalidateQueries("todos");
+    },
+  });
+
+  const deleteTodoMutation = useMutation(deleteTodo, {
+    onSuccess: () => {
+      queryClient.invalidateQueries("todos");
+    },
+  });
+
+  const hdlOKClick = () => {
+    let okToUpdate = false
+    setEditMode(false);
+    okToUpdate = (title.trim() !== "" && title.trim() !== todo.title.trim()) || completed !== todo.completed
+    if(okToUpdate)
+      updateTodoMutation.mutate({
+        ...todo,
+        title,
+        completed,
+      });
+  };
+
+  const hdlDeleteClick = () => {
+    deleteTodoMutation.mutate({
+      id: todo.id,
+    });
+  };
+
   return (
     <div className="form-control grow">
+      {editMode && (
+        <input
+          type="checkbox"
+          checked={completed}
+          className="checkbox checkbox-primary"
+          onChange={() => setCompleted(!completed)}
+        />
+      )}
       <label className="input-group">
         <input
           type="text"
           placeholder="Todo-item"
-          className="input input-bordered grow"
-          disabled={!editMode}
+          className={`input input-bordered grow ${
+            todo.completed ? "bg-lime-200" : ""
+          }`}
+          readOnly={!editMode}
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
         />
-        { !editMode ? <span className="bg-violet-600 btn" onClick={()=>setEditMode(true)}>Edit</span>
-            : <span className="bg-violet-600 btn" onClick={()=>setEditMode(false)}>Ok</span>
-        }
-        
-        <span className="bg-pink-600 btn">Delete</span>
+        {!editMode ? (
+          <span className="bg-violet-600 btn" onClick={() => setEditMode(true)}>
+            Edit
+          </span>
+        ) : (
+          <span className="bg-violet-600 btn" onClick={hdlOKClick}>
+            Ok
+          </span>
+        )}
+
+        <span className="bg-pink-600 btn" onClick={hdlDeleteClick}>
+          Delete
+        </span>
       </label>
     </div>
   );
