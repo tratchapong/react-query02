@@ -35,9 +35,11 @@ export default function TodoItem(props) {
   };
 
   const hdlDeleteClick = () => {
-    deleteTodoMutation.mutate({
-      id: todo.id,
-    });
+    if(window.confirm(`Delete "${todo.title}"`)) {
+      deleteTodoMutation.mutate({
+        id: todo.id,
+      });
+    }
   };
 
   return (

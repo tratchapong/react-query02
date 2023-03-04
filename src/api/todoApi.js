@@ -10,7 +10,7 @@ export const getTodo = async () => {
 }
 
 export const getTodoPage = async (page) => {
-    const res = await todoApi.get(`/todo?_page=${page}`)
+    const res = await todoApi.get(`/todo?_page=${page}&_sort=id&_order=desc`)
     return res.data
 }
 

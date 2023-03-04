@@ -2,7 +2,8 @@ import React, {useState} from "react";
 import {useMutation, useQueryClient} from 'react-query'
 import { addTodo,} from '../api/todoApi'
 
-export default function TodoForm() {
+export default function TodoForm(props) {
+  const {setPage} = props
   const queryClient = useQueryClient()
   const [title, setTitle] = useState('')
   
@@ -19,6 +20,7 @@ export default function TodoForm() {
         title : newTitle, completed : false, userId: 1
       })
     setTitle('')
+    setPage(1)
   } 
   
   return (
