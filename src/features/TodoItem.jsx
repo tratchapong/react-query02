@@ -25,8 +25,7 @@ export default function TodoItem(props) {
     let okToUpdate = false;
     setEditMode(false);
     okToUpdate =
-      (title.trim() !== "" && title.trim() !== todo.title.trim()) ||
-      completed !== todo.completed;
+      (title.trim() !== "" && title.trim() !== todo.title.trim()) || completed !== todo.completed;
     if (okToUpdate)
       updateTodoMutation.mutate({
         ...todo,
@@ -43,14 +42,11 @@ export default function TodoItem(props) {
 
   return (
     <div className="form-control grow">
-
       <label className="input-group">
         <input
           type="text"
           placeholder="Todo-item"
-          className={`input input-bordered grow ${
-            completed ? "bg-lime-200" : ""
-          }`}
+          className={`input input-bordered grow ${completed ? "bg-lime-200" : ""}`}
           readOnly={!editMode}
           value={title}
           onChange={(e) => setTitle(e.target.value)}

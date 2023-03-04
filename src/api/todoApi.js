@@ -9,6 +9,11 @@ export const getTodo = async () => {
     return res.data
 }
 
+export const getTodoPage = async (page) => {
+    const res = await todoApi.get(`/todo?_page=${page}`)
+    return res.data
+}
+
 export const addTodo = async (todo) => {
     return await todoApi.post('/todo', todo)
 }
