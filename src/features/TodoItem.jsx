@@ -1,7 +1,8 @@
 import React,{useState} from "react";
 
 
-export default function TodoItem() {
+export default function TodoItem(props) {
+  const {job} = props
   const [editMode, setEditMode] = useState(false)
   return (
     <div className="form-control grow">
@@ -10,6 +11,7 @@ export default function TodoItem() {
           type="text"
           placeholder="Todo-item"
           className="input input-bordered grow"
+          value={job.title}
           disabled={!editMode}
         />
         { !editMode ? <span className="bg-violet-600 btn" onClick={()=>setEditMode(true)}>Edit</span>

@@ -1,20 +1,27 @@
-import {createSlice} from '@reduxjs/toolkit'
+import {createSlice, createAsyncThunk} from '@reduxjs/toolkit'
+import {getTodo} from '../../api/todoApi'
 
-const initialState = [
-  { id: 1, title: 'Todo 01'},
-  { id: 2, title: 'Todo 02'},
-  { id: 3, title: 'Todo 03'},
-]
+const initialState = {
+  data : []
+}
+
+export const fetchTodo = createAsyncThunk('todo/fetchTodo', async () => await getTodo())
 
 export const todoSlice = createSlice({
   name: 'todo',
   initialState,
-  reducers : {}
+  reducers : {},
+  extraReducers: builder =>  
+  builder.addCase( fetchTodo.fulfilled, (state, action) => {
+    state.data = action.payload
+  })
+  .addCase( fetchTodo.rejected, (state, action) => {
+    state = action.payload
+    console.log('reject')
+  })
 })
 
-console.log(todoSlice.reducer)
 
-
-export const selectAllTodo = (state) => state.todo
+export const selectAllTodo = (state) => state.todo.data
 
 export default todoSlice.reducer

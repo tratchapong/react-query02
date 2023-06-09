@@ -6,6 +6,7 @@ const todoApi = axios.create({
 
 export const getTodo = async () => {
     const res = await todoApi.get('/todo')
+    console.log(res.data)
     return res.data
 }
 

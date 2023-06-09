@@ -1,17 +1,23 @@
-import React from "react";
-import {useSelector} from 'react-redux'
-import { selectAllTodo } from "./slice/todoSlice";
+import {useEffect} from "react";
+import {useSelector, useDispatch} from 'react-redux'
+import { fetchTodo, selectAllTodo } from "./slice/todoSlice";
 import TodoItem from "./TodoItem";
 
 export default function TodoList() {
   // const allTodo = useSelector(selectAllTodo)
-  const allTodo = useSelector(state => state)
-  console.log(allTodo)
+  const dispatch = useDispatch()
+  const allTodo = useSelector(state => state.todo.data)
+  useEffect( () => {
+    dispatch(fetchTodo())
+  }, [])
+
   return (
     <div className="flex flex-col mt-4 gap-1">
-      <p>{JSON.stringify(allTodo)}</p>
-      <TodoItem />
-      <TodoItem />
+      {allTodo?.map(el => (
+        <TodoItem key={el.id} job={el}/>
+      ))
+   }
+      
 
     </div>
   );
