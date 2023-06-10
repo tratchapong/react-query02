@@ -1,6 +1,16 @@
-import React from "react";
+import {useState} from "react";
+import { useDispatch } from "react-redux";
+import { addNewTodo } from "./slice/todoSlice";
+
 
 export default function TodoForm() {
+  const dispatch = useDispatch()
+  const [title, setTitle] = useState('')
+  const hdlAdd = () => {
+    let input = {userId: 1, title, completed: false}
+    dispatch(addNewTodo(input))
+    setTitle('')
+  }
   return (
     <div className="flex">
       <div className="form-control grow ">
@@ -9,8 +19,10 @@ export default function TodoForm() {
             type="text"
             placeholder="Add new…"
             className="input input-bordered grow"
+            value={title}
+            onChange={e=>setTitle(e.target.value)}
           />
-          <button className="btn btn-square bg-slate-500">
+          <button className="btn btn-square bg-slate-500" onClick={hdlAdd}>
             <svg
               viewBox="0 0 24 24"
               fill="none"
