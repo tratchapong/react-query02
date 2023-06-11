@@ -6,7 +6,6 @@ const todoApi = axios.create({
 
 export const getTodo = async () => {
     const res = await todoApi.get('/todo?_sort=id&_order=desc')
-    // return Promise.reject('An Error..')
     return res.data 
 }
 
@@ -22,4 +21,4 @@ export const deleteTodo = async (id) => {
     return await todoApi.delete(`/todo/${id}`, id)
 }
 
-export default todoApi
+

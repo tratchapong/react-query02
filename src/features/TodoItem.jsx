@@ -1,6 +1,7 @@
 import {useState} from "react";
 import { useDispatch } from "react-redux";
 import { removeTodo, changeTodo } from "./slice/todoSlice";
+import { toast } from "react-toastify";
 
 export default function TodoItem(props) {
   const {job} = props
@@ -9,11 +10,15 @@ export default function TodoItem(props) {
   const [title, setTitle] = useState(job?.title)
 
   const hdlDelete = () => {
-    dispatch(removeTodo(job.id))
+    dispatch(removeTodo(job.id)).unwrap()
+    .then( _ => toast.success(`delete id : ${job.id} done..`))
+    .catch( err => toast.error(`cannot delete id : ${job.id}`))
   }
 
   const hdlUpdate = () => {
-    dispatch(changeTodo({...job, title}))
+    dispatch(changeTodo({...job, title})).unwrap()
+    .then( _=> toast.success('Update done..'))
+    .catch( err => toast.error('Nothing change due to ' + err.message))
     setEditMode(false)
   }
   return (

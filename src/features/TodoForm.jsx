@@ -1,14 +1,20 @@
 import {useState} from "react";
 import { useDispatch } from "react-redux";
-import { addNewTodo } from "./slice/todoSlice";
-
+import {toast} from 'react-toastify'
+import { addNewTodo} from "./slice/todoSlice";
 
 export default function TodoForm() {
   const dispatch = useDispatch()
   const [title, setTitle] = useState('')
   const hdlAdd = () => {
+    if(!title.trim()) 
+      return toast.error('cannot add blank input..', {
+        position: 'top-right', autoclose: 500,
+      })
     let input = {userId: 1, title, completed: false}
-    dispatch(addNewTodo(input))
+    dispatch(addNewTodo(input)).unwrap().catch( err => {
+      toast.error(err.message)
+    })
     setTitle('')
   }
   return (

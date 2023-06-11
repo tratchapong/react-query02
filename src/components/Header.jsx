@@ -1,6 +1,13 @@
-import React from 'react'
+import { useDispatch } from 'react-redux'
+import { setTodoError } from "../features/slice/todoSlice";
 
 export default function Header() {
+  const dispatch = useDispatch()
+
+  const hdlToast = () => {
+    dispatch(setTodoError(Date.now()))
+  }
+
   return (
     <div className="navbar bg-base-100">
   <div className="flex-1">
@@ -8,7 +15,7 @@ export default function Header() {
   </div>
   <div className="flex-none">
     <ul className="menu menu-horizontal px-1">
-      <li><p>Item 1</p></li>
+      <li onClick={hdlToast}><p>test Toast</p></li>
       <li tabIndex={0}>
         <p>
           Parent

@@ -9,9 +9,19 @@ const initialState = {
 
 export const fetchTodo = createAsyncThunk('todo/fetchTodo', () =>  getTodo())
 
+// export const addNewTodo = createAsyncThunk('todo/addNewTodo', async (input,thunkApi) =>{
+//   try {
+//     let res =  await addTodo(input)
+//     return res.data
+//   } catch (error) {
+//     console.log(error)
+//     return thunkApi.rejectWithValue(error)
+//   }
+// })
+
 export const addNewTodo = createAsyncThunk('todo/addNewTodo', async (input) =>{
-   let res =  await addTodo(input)
-   return res.data
+  const res = await addTodo(input)
+  return res.data
 })
 
 export const removeTodo = createAsyncThunk('todo/removeTodo', async (del_id) => {
@@ -27,7 +37,13 @@ export const changeTodo = createAsyncThunk('todo/changeTodo', async (input) => {
 export const todoSlice = createSlice({
   name: 'todo',
   initialState,
-  reducers : {},
+  reducers : {
+    setTodoError : (state, action)=> { 
+      console.log(action)
+      state.error = {...state.error, message : action.payload}
+      // state.error.message  =  action.payload
+    }
+  },
   extraReducers: builder =>  
   builder.addCase(fetchTodo.pending, (state, action) => {
     state.error = null
@@ -57,5 +73,7 @@ export const todoSlice = createSlice({
   })
 
 })
+
+export const { setTodoError } = todoSlice.actions
 
 export default todoSlice.reducer
